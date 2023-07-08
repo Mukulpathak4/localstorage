@@ -19,7 +19,7 @@
         <br>
         <button>Submit</button>
     </form>
-    <ul id="listOfItems"><button>Delete</button></ul>
+    <ul id="listOfItems"></ul>
     <script>
         window.onload = function () {
             localStorage.setItem("name", $('#inputName').val());
@@ -40,15 +40,23 @@
             }
             localStorage.setItem(obj.email, JSON.stringify(obj));
             showUserOnScreen(obj);
+            deletebtn(obj);
         }
         function showUserOnScreen(obj) {
             const parentElement = document.getElementById('listOfItems')
             const childItem = document.createElement('li');
             childItem.textContent = obj.name + '-' + obj.email + '-' + obj.phoneNumber
+            const deletebtn = document.createElement('input');
+            deletebtn.type = 'button'
+            deletebtn.value = 'Delete'
+            deletebtn.onclick = () => {
+                localStorage.removeItem(deletebtn);
+                parentElement.removeChild(childItem);
+            }
+            childItem.appendChild(deletebtn);
             parentElement.appendChild(childItem);
-
-
         }
+
 
         //Store userdetails in local storage
         //to show userdetails on screen using dom manipulation
