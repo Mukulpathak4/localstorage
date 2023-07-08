@@ -6,15 +6,15 @@
 <body>
     <form onsubmit="saveToLocalStorage(event)">
         <label>Name:</label>
-        <input type="text" name="username" required>
+        <input type="text" name="username" id="usernameInputTag" required>
         <br>
         <br>
         <label>Email:</label>
-        <input type="email" name="email" required>
+        <input type="email" name="email" id="emailInputTag" required>
         <br>
         <br>
         <label>PhoneNo:</label>
-        <input type="tel" name="phoneNumber" required>
+        <input type="tel" name="phoneNumber" id="phoneNumberInputTag" required>
         <br>
         <br>
         <button>Submit</button>
@@ -41,6 +41,7 @@
             localStorage.setItem(obj.email, JSON.stringify(obj));
             showUserOnScreen(obj);
             deletebtn(obj);
+            editbtn(obj);
         }
         function showUserOnScreen(obj) {
             const parentElement = document.getElementById('listOfItems')
@@ -50,10 +51,23 @@
             deletebtn.type = 'button'
             deletebtn.value = 'Delete'
             deletebtn.onclick = () => {
-                localStorage.removeItem(deletebtn);
+                localStorage.removeItem(obj.email);
                 parentElement.removeChild(childItem);
+                localStorage.removeItem(parentElement);
+            }
+            const editbtn = document.createElement('input');
+            editbtn.type = 'button'
+            editbtn.value = 'Edit'
+            editbtn.onclick = () => {
+                localStorage.removeItem(obj.email);
+                parentElement.removeChild(childItem);
+                document.getElementById('usernameInputTag').value = obj.name;
+                document.getElementById('emailInputTag').value = obj.email;
+                document.getElementById('phoneNumbernameInputTag').value = obj.phoneNumber;
+
             }
             childItem.appendChild(deletebtn);
+            childItem.appendChild(editbtn);
             parentElement.appendChild(childItem);
         }
 
